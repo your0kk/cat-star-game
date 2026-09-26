@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11172f" />
+    <title>Котик ловит звёзды</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="game-card" aria-label="Игра Котик ловит звёзды">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">маленькая игра, которую я сделал</p>
+            <h1>Котик ловит звёзды!</h1>
+          </div>
+          <button class="sound-button" id="soundButton" type="button" aria-pressed="true" title="Включить или выключить звук">звук: да</button>
+        </div>
+
+        <div class="stats" aria-live="polite">
+          <div class="stat"><span>поймано</span><strong id="score">0</strong></div>
+          <div class="stat"><span>мой рекорд</span><strong id="bestScore">0</strong></div>
+          <div class="stat"><span>секунд</span><strong id="time">45</strong></div>
+        </div>
+
+        <div class="game-area" id="gameArea" tabindex="0" aria-label="Игровое поле. Управляйте стрелками или клавишами A и D.">
+          <div class="sky-glow glow-one"></div>
+          <div class="sky-glow glow-two"></div>
+          <div class="instructions" id="instructions">
+            <span class="sparkle">✦</span>
+            <p>Помоги котику!</p>
+            <small>стрелки / A и D / касание</small>
+          </div>
+          <div class="player" id="player" aria-hidden="true"><img src="cat-player.png" alt="" /></div>
+        </div>
+
+        <div class="controls">
+          <button class="move-button" id="leftButton" type="button" aria-label="Двигаться влево">←</button>
+          <button class="start-button" id="startButton" type="button">погнали</button>
+          <button class="move-button" id="rightButton" type="button" aria-label="Двигаться вправо">→</button>
+        </div>
+        <p class="hint">Золотые звёзды дают 3 очка. Метеориты лучше не ловить.</p>
+        <p class="personal-note">сделано ради котика. и потому что мне хотелось сделать игру :)</p>
+      </section>
+    </main>
+
+    <div class="modal hidden" id="gameOverModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <span class="modal-star">★</span>
+        <p class="eyebrow">КОНЕЦ ИГРЫ</p>
+        <h2 id="modalTitle">Ты поймал <span id="finalScore">0</span> звёзд!</h2>
+        <p id="resultMessage">Котик доволен. Почти.</p>
+        <button class="start-button" id="playAgainButton" type="button">Сыграть ещё</button>
+      </div>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
