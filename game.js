@@ -26,7 +26,7 @@ let timer;
 let lastFrame;
 let objects = [];
 let audioContext;
-let bestScore = Number(localStorage.getItem('starCatcherBest') || 0);
+let bestScore = Number(localStorage.getItem('hellCatBurgerBest') || 0);
 
 bestScoreElement.textContent = bestScore;
 
@@ -58,10 +58,10 @@ function movePlayer(direction) {
 function spawnObject() {
   if (!running) return;
   const roll = Math.random();
-  const type = roll < 0.13 ? 'meteor' : roll < 0.31 ? 'gold' : 'star';
+  const type = roll < 0.15 ? 'spike' : roll < 0.33 ? 'double' : 'burger';
   const element = document.createElement('div');
   element.className = `falling ${type}`;
-  element.textContent = type === 'meteor' ? '☄️' : '★';
+  element.textContent = type === 'spike' ? '▲' : '🍔';
   element.style.left = `${6 + Math.random() * 88}%`;
   area.appendChild(element);
   objects.push({ element, type, x: Number.parseFloat(element.style.left), y: -42, speed: 110 + Math.random() * 85 });
@@ -91,17 +91,17 @@ function updateObjects(delta) {
 
     if (closeX && closeY) {
       object.element.remove();
-      if (object.type === 'meteor') {
+      if (object.type === 'spike') {
         score = Math.max(0, score - 2);
         scoreElement.textContent = score;
         showPop(object.x, playerY - 10, '−2', true);
         playTone(130, 0.16, 'sawtooth');
       } else {
-        const points = object.type === 'gold' ? 3 : 1;
+        const points = object.type === 'double' ? 3 : 1;
         score += points;
         scoreElement.textContent = score;
         showPop(object.x, playerY - 10, `+${points}`);
-        playTone(object.type === 'gold' ? 880 : 620, 0.09, 'triangle');
+        playTone(object.type === 'double' ? 880 : 620, 0.09, 'triangle');
       }
       return false;
     }
@@ -128,11 +128,11 @@ function endGame() {
   clearInterval(timer);
   if (score > bestScore) {
     bestScore = score;
-    localStorage.setItem('starCatcherBest', bestScore);
+    localStorage.setItem('hellCatBurgerBest', bestScore);
     bestScoreElement.textContent = bestScore;
   }
   finalScoreElement.textContent = score;
-  resultMessage.textContent = score >= 35 ? 'Котик тобой очень гордится!' : score >= 18 ? 'Неплохо! Котик поймал много звёзд.' : 'Котик верит, что в этот раз получится лучше.';
+  resultMessage.textContent = score >= 35 ? 'Котик победил адский голод!' : score >= 18 ? 'Котик уже почти выбрался из ада.' : 'Ещё немного бургеров — и котик спасётся.';
   modal.classList.remove('hidden');
   playTone(260, 0.25, 'square');
 }
@@ -147,7 +147,7 @@ function startGame() {
   setPlayerPosition(50);
   modal.classList.add('hidden');
   instructions.classList.add('is-hidden');
-  startButton.textContent = 'Игра идёт';
+  startButton.textContent = 'котик в аду';
   running = true;
   area.focus();
   lastFrame = performance.now();
@@ -183,3 +183,4 @@ soundButton.addEventListener('click', () => {
   soundButton.textContent = muted ? 'звук: нет' : 'звук: да';
   soundButton.setAttribute('aria-pressed', String(!muted));
 });
+
